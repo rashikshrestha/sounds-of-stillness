@@ -1,5 +1,5 @@
 ---
-title: Drunk on the Divine Elixir (parts)
+title: Drunk on the Divine Elixir
 date: 2024-12-20
 cover: /images/uploads/linga_bhairavi.png
 excerpt: There are experiences that dissolve the boundary between you and
