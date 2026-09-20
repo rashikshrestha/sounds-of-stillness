@@ -5,39 +5,162 @@ import { getEntry } from 'astro:content';
 const home = await getEntry('home', 'index');
 const { Content } = await home.render();
 const gallery = await getEntry('gallery', 'index');
+const quotes = await getEntry('quotes', 'index');
+const coverImage = home.data.coverImage ?? '/images/uploads/placeholder.svg';
+const aboutImage = home.data.aboutImage ?? '/images/uploads/placeholder.svg';
+const connectImage = home.data.connectImage ?? '/images/uploads/placeholder.svg';
+const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
 ---
 <Layout title={home.data.title}>
-  <img
-    class="cover"
-    src={home.data.coverImage ?? '/images/uploads/placeholder.svg'}
-    alt={home.data.title}
-  />
-  <h1>{home.data.title}</h1>
-  {home.data.description && <p>{home.data.description}</p>}
-  <Content />
+  <section class="hero" style={`background-image: url(${coverImage})`}>
+    {home.data.author && <p class="author">{home.data.author}</p>}
+    <h1 class="title">{home.data.title}</h1>
+    {home.data.description && <p class="description">{home.data.description}</p>}
+  </section>
 
-  <h2>Visual Poetry</h2>
-  <div class="gallery">
-    {gallery.data.images.map((src: string) => (
-      <div class="gallery-item">
-        <img src={src} alt="" loading="lazy" />
+  <section class="about">
+    <img class="about-image" src={aboutImage} alt={home.data.aboutTitle ?? 'About'} />
+    <div class="about-text">
+      <p class="eyebrow">About</p>
+      {home.data.aboutTitle && <h2 class="about-title">{home.data.aboutTitle}</h2>}
+      <div class="about-body">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <p class="eyebrow center">Visual Poetry</p>
+    {home.data.galleryTitle && <h2 class="gallery-title">{home.data.galleryTitle}</h2>}
+    <div class="gallery">
+      {gallery.data.images.map((src: string) => (
+        <div class="gallery-item">
+          <img src={src} alt="" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="words">
+    <p class="eyebrow center">Words</p>
+    <h2 class="words-title">Wisdom Gathered Along the Way</h2>
+    {quotes.data.quotes.map((q: { text: string; attribution?: string }) => (
+      <div class="quote">
+        <hr />
+        <p class="quote-text">&ldquo;{q.text}&rdquo;</p>
+        {q.attribution && <p class="quote-attribution">— {q.attribution}</p>}
       </div>
     ))}
-  </div>
+  </section>
+
+  <section class="connect" style={`background-image: url(${connectImage})`}>
+    <p class="eyebrow center light">Connect</p>
+    {home.data.connectTitle && <h2 class="connect-title">{home.data.connectTitle}</h2>}
+    {connectSubtitleLines.map((line: string) => <p class="connect-subtitle">{line}</p>)}
+    {home.data.connectHandle && (
+      <a
+        class="connect-handle"
+        href={home.data.connectHandleUrl || '#'}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {home.data.connectHandle}
+      </a>
+    )}
+    {home.data.connectQuote && <p class="connect-quote">&ldquo;{home.data.connectQuote}&rdquo;</p>}
+  </section>
 </Layout>
 
 <style>
-  .cover {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    min-height: 60vh;
+    padding: 2rem 1.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.45);
     border-radius: 8px;
+  }
+  .author {
+    margin: 0;
+    color: #d9a55a;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.85rem;
+  }
+  .title {
+    margin: 0;
+    color: #f5f0e8;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  .description {
+    margin: 0;
+    color: #d8d2c6;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem;
+  }
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 2.5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+  .about-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    border-radius: 4px;
+  }
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    color: #d9a55a;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.8rem;
+  }
+  .about-title {
+    margin: 0 0 1rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+  }
+  .about-body :global(p) {
+    margin: 0 0 1rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  @media (max-width: 700px) {
+    .about {
+      grid-template-columns: 1fr;
+    }
+  }
+  .gallery-section {
+    text-align: center;
+    margin-top: 4rem;
+  }
+  .gallery-title {
+    margin: 0 0 2rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
   }
   .gallery {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
-    margin-top: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
   }
   .gallery-item {
     aspect-ratio: 1 / 1;
@@ -53,5 +176,91 @@ const gallery = await getEntry('gallery', 'index');
     .gallery {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
+  .words {
+    max-width: 700px;
+    margin: 4rem auto 0;
+    text-align: center;
+  }
+  .eyebrow.center {
+    text-align: center;
+  }
+  .words-title {
+    margin: 0 0 2rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+  }
+  .quote {
+    padding: 2rem 0;
+  }
+  .quote hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 2rem;
+  }
+  .quote-text {
+    margin: 0 0 0.75rem;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .quote-attribution {
+    margin: 0;
+    color: #d9a55a;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+  }
+  .connect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
+    min-height: 50vh;
+    margin-top: 4rem;
+    padding: 3rem 1.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 8px;
+  }
+  .eyebrow.light {
+    color: #d9a55a;
+  }
+  .connect-title {
+    margin: 0;
+    color: #f5f0e8;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+  }
+  .connect-subtitle {
+    margin: 0;
+    color: #d8d2c6;
+  }
+  .connect-handle {
+    margin-top: 1rem;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #d9a55a;
+    border-radius: 4px;
+    color: #d9a55a;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+  .connect-quote {
+    margin-top: 1.5rem;
+    color: #d8d2c6;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 0.95rem;
   }
 </style>
