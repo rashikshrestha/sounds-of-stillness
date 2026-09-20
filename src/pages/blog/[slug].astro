@@ -102,6 +102,23 @@ const coverImage = post.data.coverImage ?? '/images/uploads/placeholder.svg';
   .body :global(p:last-child) {
     margin-bottom: 0;
   }
+  .body :global(blockquote) {
+    border-left: 2px solid var(--crimson);
+    padding-left: 24px;
+    margin: 0 0 24px;
+  }
+  .body :global(blockquote p) {
+    font-style: italic;
+    color: var(--text);
+  }
+  .body :global(blockquote p:last-child) {
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0;
+  }
   .footer {
     margin-top: 24px;
     padding-top: 32px;

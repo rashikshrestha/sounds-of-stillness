@@ -16,7 +16,7 @@ const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
     <img src={coverImage} alt="" class="hero-bg" />
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      {home.data.author && <p class="eyebrow">{home.data.author}</p>}
+      {home.data.author && <p class="eyebrow hero-author">{home.data.author}</p>}
       <h1 class="hero-title">{home.data.title}</h1>
       {home.data.description && <p class="hero-tagline">{home.data.description}</p>}
       <a href="#about" class="scroll-down" aria-label="Scroll down">↓</a>
@@ -220,6 +220,10 @@ const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
     padding: 0 24px;
     --amber: #c4853a;
   }
+  .hero-author {
+    font-size: 16px;
+    letter-spacing: 5px;
+  }
   .hero-title {
     font-family: var(--font-head);
     font-size: clamp(52px, 8vw, 96px);
@@ -283,6 +287,10 @@ const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
     color: var(--text-dim);
     font-size: 16px;
     line-height: 1.85;
+    margin-bottom: 20px;
+  }
+  .about-body :global(p:last-child) {
+    margin-bottom: 0;
   }
   @media (max-width: 900px) {
     .about-inner {

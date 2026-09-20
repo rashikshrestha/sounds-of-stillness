@@ -5,9 +5,9 @@ coverImage: /images/uploads/meditation_mudra.png
 excerpt: Here in this body are the sacred rivers, here are the sun and moon, as well as all pilgrimage places.
 ---
 
-"Here in this body are the sacred rivers, here are the sun and moon, as well as all pilgrimage places. I've not encountered another temple as blissful as my own body."
-
-— Saraha Doha
+> Here in this body are the sacred rivers, here are the sun and moon, as well as all pilgrimage places. I've not encountered another temple as blissful as my own body.
+>
+> — Saraha Doha
 
 We search outside for what has always lived within. We cross rivers and climb mountains and sit in ancient temples — and all of it points us back, always, to this body, this breath, this beating life.
 
