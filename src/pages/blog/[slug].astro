@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { formatDate } from '../../lib/formatDate';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -21,7 +22,7 @@ const coverImage = post.data.coverImage ?? '/images/uploads/placeholder.svg';
       <img src={coverImage} alt={post.data.title} class="hero-image" />
       <div class="hero-overlay"></div>
       <div class="hero-text">
-        <p class="date">{post.data.date.toDateString()}</p>
+        <p class="date">{formatDate(post.data.date)}</p>
         <h1 class="title">{post.data.title}</h1>
       </div>
     </div>
@@ -96,6 +97,10 @@ const coverImage = post.data.coverImage ?? '/images/uploads/placeholder.svg';
     font-size: 18px;
     line-height: 1.9;
     color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .body :global(p:last-child) {
+    margin-bottom: 0;
   }
   .footer {
     margin-top: 24px;

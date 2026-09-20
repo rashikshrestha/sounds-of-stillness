@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/formatDate';
 
 const posts = await getCollection('posts');
 const sorted = posts.sort(
@@ -24,7 +25,7 @@ const sorted = posts.sort(
             class="card-image"
           />
           <div class="card-body">
-            <p class="card-date">{post.data.date.toDateString()}</p>
+            <p class="card-date">{formatDate(post.data.date)}</p>
             <h2 class="card-title">{post.data.title}</h2>
             {post.data.excerpt && <p class="card-excerpt">{post.data.excerpt}</p>}
             <span class="read-more">Read more →</span>
