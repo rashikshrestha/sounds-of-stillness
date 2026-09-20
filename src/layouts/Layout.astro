@@ -6,15 +6,19 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
     <script is:inline>
       (function () {
         try {
           const stored = localStorage.getItem('theme');
-          const theme =
-            stored ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.setAttribute('data-theme', stored === 'light' ? 'light' : 'dark');
         } catch (e) {}
       })();
     </script>
@@ -26,18 +30,75 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Dark theme (default) */
   :root {
-    --bg: #ffffff;
-    --text: #111111;
-    --border: #ddd;
+    --bg: #0e0d0c;
+    --surface: #1c1612;
+    --crimson: #8b1e2f;
+    --amber: #c4853a;
+    --text: #f0ead8;
+    --text-dim: #a8957e;
+    --border: rgba(196, 133, 58, 0.2);
+    --font-head: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Lora', Georgia, serif;
+
+    --overlay-hero: linear-gradient(to bottom, rgba(14, 13, 12, 0.3) 0%, rgba(14, 13, 12, 0.6) 100%);
+    --overlay-section: rgba(14, 13, 12, 0.3);
+    --overlay-caption: linear-gradient(to top, rgba(14, 13, 12, 0.85), transparent);
+    --nav-scrolled-bg: rgba(14, 13, 12, 0.88);
+    --nav-scrolled-border: rgba(196, 133, 58, 0.12);
+    --section-img-filter: brightness(0.45);
   }
-  :root[data-theme='dark'] {
-    --bg: #121212;
-    --text: #f0f0f0;
-    --border: #333;
+
+  /* Light theme */
+  :root[data-theme='light'] {
+    --bg: #f5ede0;
+    --surface: #ede3d2;
+    --crimson: #8b1e2f;
+    --amber: #9e5e18;
+    --text: #1e1510;
+    --text-dim: #6b5244;
+    --border: rgba(158, 94, 24, 0.2);
+
+    --overlay-hero: linear-gradient(to bottom, rgba(245, 237, 224, 0.35) 0%, rgba(245, 237, 224, 0.72) 100%);
+    --overlay-section: linear-gradient(to bottom, rgba(115, 50, 10, 0.2) 0%, rgba(60, 22, 4, 0.35) 100%);
+    --overlay-caption: linear-gradient(to top, rgba(245, 237, 224, 0.9), transparent);
+    --nav-scrolled-bg: rgba(245, 237, 224, 0.92);
+    --nav-scrolled-border: rgba(158, 94, 24, 0.15);
+    --section-img-filter: brightness(0.62);
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background: var(--bg);
+    background-color: var(--bg);
     color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: var(--amber);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 </style>

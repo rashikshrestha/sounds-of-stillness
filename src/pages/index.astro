@@ -12,26 +12,37 @@ const connectImage = home.data.connectImage ?? '/images/uploads/placeholder.svg'
 const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
 ---
 <Layout title={home.data.title}>
-  <section class="hero" style={`background-image: url(${coverImage})`}>
-    {home.data.author && <p class="author">{home.data.author}</p>}
-    <h1 class="title">{home.data.title}</h1>
-    {home.data.description && <p class="description">{home.data.description}</p>}
+  <section class="hero">
+    <img src={coverImage} alt="" class="hero-bg" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      {home.data.author && <p class="eyebrow">{home.data.author}</p>}
+      <h1 class="hero-title">{home.data.title}</h1>
+      {home.data.description && <p class="hero-tagline">{home.data.description}</p>}
+      <a href="#about" class="scroll-down" aria-label="Scroll down">↓</a>
+    </div>
   </section>
 
-  <section class="about">
-    <img class="about-image" src={aboutImage} alt={home.data.aboutTitle ?? 'About'} />
-    <div class="about-text">
-      <p class="eyebrow">About</p>
-      {home.data.aboutTitle && <h2 class="about-title">{home.data.aboutTitle}</h2>}
-      <div class="about-body">
-        <Content />
+  <section id="about" class="about">
+    <div class="about-inner">
+      <div class="about-image-wrap">
+        <img class="about-image" src={aboutImage} alt={home.data.aboutTitle ?? 'About'} />
+      </div>
+      <div class="about-text">
+        <p class="eyebrow">About</p>
+        {home.data.aboutTitle && <h2 class="about-title">{home.data.aboutTitle}</h2>}
+        <div class="about-body">
+          <Content />
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="gallery-section">
-    <p class="eyebrow center">Visual Poetry</p>
-    {home.data.galleryTitle && <h2 class="gallery-title">{home.data.galleryTitle}</h2>}
+  <section id="gallery" class="gallery-section">
+    <div class="section-header">
+      <p class="eyebrow">Visual Poetry</p>
+      {home.data.galleryTitle && <h2 class="section-heading">{home.data.galleryTitle}</h2>}
+    </div>
     <div class="gallery">
       {gallery.data.images.map((src: string) => (
         <div class="gallery-item">
@@ -41,226 +52,324 @@ const connectSubtitleLines = home.data.connectSubtitle?.split('\n') ?? [];
     </div>
   </section>
 
-  <section class="words">
-    <p class="eyebrow center">Words</p>
-    <h2 class="words-title">Wisdom Gathered Along the Way</h2>
-    {quotes.data.quotes.map((q: { text: string; attribution?: string }) => (
-      <div class="quote">
-        <hr />
-        <p class="quote-text">&ldquo;{q.text}&rdquo;</p>
-        {q.attribution && <p class="quote-attribution">— {q.attribution}</p>}
-      </div>
-    ))}
+  <section id="wisdom" class="words">
+    <div class="section-header">
+      <p class="eyebrow">Words</p>
+      <h2 class="section-heading">Wisdom Gathered Along the Way</h2>
+    </div>
+    <div class="quote-list">
+      {quotes.data.quotes.map((q: { text: string; attribution?: string }) => (
+        <div class="quote-block">
+          <p class="quote-text">&ldquo;{q.text}&rdquo;</p>
+          {q.attribution && <p class="quote-source">— {q.attribution}</p>}
+        </div>
+      ))}
+    </div>
   </section>
 
-  <section class="connect" style={`background-image: url(${connectImage})`}>
-    <p class="eyebrow center light">Connect</p>
-    {home.data.connectTitle && <h2 class="connect-title">{home.data.connectTitle}</h2>}
-    {connectSubtitleLines.map((line: string) => <p class="connect-subtitle">{line}</p>)}
-    {home.data.connectHandle && (
-      <a
-        class="connect-handle"
-        href={home.data.connectHandleUrl || '#'}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {home.data.connectHandle}
-      </a>
-    )}
-    {home.data.connectQuote && <p class="connect-quote">&ldquo;{home.data.connectQuote}&rdquo;</p>}
+  <section id="connect" class="connect">
+    <img src={connectImage} alt="" class="connect-bg" />
+    <div class="connect-overlay"></div>
+    <div class="connect-content">
+      <p class="eyebrow">Connect</p>
+      {home.data.connectTitle && <h2 class="connect-title">{home.data.connectTitle}</h2>}
+      <p class="connect-body">
+        {connectSubtitleLines.map((line: string, i: number) => (
+          <>
+            {i > 0 && <br />}
+            {line}
+          </>
+        ))}
+      </p>
+      {home.data.connectHandle && (
+        <a
+          class="connect-handle"
+          href={home.data.connectHandleUrl || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {home.data.connectHandle}
+        </a>
+      )}
+      {home.data.connectQuote && <p class="connect-closing">&ldquo;{home.data.connectQuote}&rdquo;</p>}
+    </div>
   </section>
 </Layout>
 
 <style>
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  /* Hero always keeps its own moody, dark-image styling regardless of the
+     active theme — it overrides --overlay-hero locally rather than using
+     the theme's default (which is tuned for text-on-solid-background). */
   .hero {
+    position: relative;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    text-align: center;
-    min-height: 60vh;
-    padding: 2rem 1.5rem;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.45);
-    border-radius: 8px;
+    overflow: hidden;
+    --overlay-hero: linear-gradient(to bottom, rgba(14, 13, 12, 0.3) 0%, rgba(14, 13, 12, 0.6) 100%);
   }
-  .author {
-    margin: 0;
-    color: #d9a55a;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.85rem;
+  :root[data-theme='light'] .hero {
+    --overlay-hero: linear-gradient(to bottom, rgba(14, 13, 12, 0.01) 0%, rgba(14, 13, 12, 0.15) 100%);
   }
-  .title {
-    margin: 0;
-    color: #f5f0e8;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-  }
-  .description {
-    margin: 0;
-    color: #d8d2c6;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 1.1rem;
-  }
-  .about {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 2.5rem;
-    align-items: start;
-    margin-top: 3rem;
-  }
-  .about-image {
+  .hero-bg {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(1);
-    border-radius: 4px;
+    object-position: center top;
+    filter: brightness(0.45);
   }
-  .eyebrow {
-    margin: 0 0 0.5rem;
-    color: #d9a55a;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-size: 0.8rem;
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-hero);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 24px;
+    --amber: #c4853a;
+  }
+  .hero-title {
+    font-family: var(--font-head);
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 300;
+    font-style: italic;
+    color: #f0ead8;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero-tagline {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: #a8957e;
+    letter-spacing: 1px;
+  }
+  .scroll-down {
+    display: inline-block;
+    margin-top: 48px;
+    font-size: 24px;
+    color: #a8957e;
+    opacity: 0.7;
+  }
+
+  /* About */
+  .about {
+    padding: 100px 40px;
+    background: var(--surface);
+  }
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.75fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .about-image-wrap {
+    overflow: hidden;
+  }
+  .about-image {
+    width: 100%;
+    height: 560px;
+    object-fit: cover;
+    object-position: center top;
+    filter: sepia(15%);
+  }
+  .about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
   .about-title {
-    margin: 0 0 1rem;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-head);
+    font-size: 42px;
+    font-weight: 300;
     font-style: italic;
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--text);
+    line-height: 1.2;
   }
   .about-body :global(p) {
-    margin: 0 0 1rem;
-    line-height: 1.6;
-    color: var(--text);
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.85;
   }
-  @media (max-width: 700px) {
-    .about {
+  @media (max-width: 900px) {
+    .about-inner {
       grid-template-columns: 1fr;
     }
   }
-  .gallery-section {
+
+  /* Shared section header (Gallery / Words) */
+  .section-header {
     text-align: center;
-    margin-top: 4rem;
+    margin-bottom: 56px;
   }
-  .gallery-title {
-    margin: 0 0 2rem;
-    font-family: Georgia, 'Times New Roman', serif;
+  .section-heading {
+    font-family: var(--font-head);
+    font-size: 42px;
+    font-weight: 300;
     font-style: italic;
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--text);
+  }
+
+  /* Gallery */
+  .gallery-section {
+    padding: 100px 40px;
+    background: var(--bg);
+    text-align: center;
   }
   .gallery {
+    max-width: 1100px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    max-width: 800px;
-    margin: 0 auto;
+    gap: 8px;
   }
   .gallery-item {
-    aspect-ratio: 1 / 1;
+    position: relative;
     overflow: hidden;
+    aspect-ratio: 3 / 4;
   }
   .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s ease;
   }
-  @media (max-width: 600px) {
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+  @media (max-width: 900px) {
     .gallery {
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  /* Words */
   .words {
-    max-width: 700px;
-    margin: 4rem auto 0;
+    padding: 100px 40px;
+    background: var(--surface);
+  }
+  .quote-list {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .quote-block {
     text-align: center;
-  }
-  .eyebrow.center {
-    text-align: center;
-  }
-  .words-title {
-    margin: 0 0 2rem;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
-  }
-  .quote {
-    padding: 2rem 0;
-  }
-  .quote hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0 0 2rem;
+    border-top: 1px solid rgba(196, 133, 58, 0.2);
+    padding-top: 48px;
   }
   .quote-text {
-    margin: 0 0 0.75rem;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-head);
+    font-size: clamp(22px, 3vw, 30px);
     font-style: italic;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-weight: 300;
     color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
-  .quote-attribution {
-    margin: 0;
-    color: #d9a55a;
+  .quote-source {
+    font-size: 12px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.75rem;
+    color: var(--amber);
   }
+
+  /* Connect */
   .connect {
+    position: relative;
+    padding: 120px 40px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .connect-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    filter: var(--section-img-filter);
+  }
+  .connect-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-section);
+  }
+  .connect-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 560px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    text-align: center;
-    min-height: 50vh;
-    margin-top: 4rem;
-    padding: 3rem 1.5rem;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.55);
-    border-radius: 8px;
-  }
-  .eyebrow.light {
-    color: #d9a55a;
+    gap: 20px;
   }
   .connect-title {
-    margin: 0;
-    color: #f5f0e8;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: var(--font-head);
+    font-size: 48px;
+    font-weight: 300;
     font-style: italic;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--text);
+    line-height: 1.2;
   }
-  .connect-subtitle {
-    margin: 0;
-    color: #d8d2c6;
+  .connect-body {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.8;
   }
   .connect-handle {
-    margin-top: 1rem;
-    padding: 0.5rem 1.25rem;
-    border: 1px solid #d9a55a;
-    border-radius: 4px;
-    color: #d9a55a;
-    text-decoration: none;
-    letter-spacing: 0.15em;
-    font-size: 0.85rem;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 12px 32px;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    letter-spacing: 2px;
+    font-size: 13px;
     text-transform: uppercase;
   }
-  .connect-quote {
-    margin-top: 1.5rem;
-    color: #d8d2c6;
-    font-family: Georgia, 'Times New Roman', serif;
+  .connect-closing {
+    margin-top: 20px;
     font-style: italic;
-    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-size: 15px;
+  }
+
+  /* Connect section keeps a dark editorial photo backdrop even in light
+     mode, so its text needs to stay warm/light rather than following the
+     theme's normal (dark-on-light) text color. */
+  :root[data-theme='light'] .connect-title {
+    color: #f0e8d6;
+  }
+  :root[data-theme='light'] .connect-body {
+    color: #cbb89a;
+  }
+  :root[data-theme='light'] .connect .eyebrow {
+    color: #e8a650;
+  }
+  :root[data-theme='light'] .connect-handle {
+    border-color: #e8a650;
+    color: #e8a650;
+  }
+  :root[data-theme='light'] .connect-closing {
+    color: #c4a882;
   }
 </style>
