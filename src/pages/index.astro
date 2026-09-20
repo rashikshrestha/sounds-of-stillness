@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const home = await getEntry('home', 'index');
+const { Content } = await home.render();
+---
+<Layout title={home.data.title}>
+  <h1>{home.data.title}</h1>
+  {home.data.description && <p>{home.data.description}</p>}
+  <Content />
+</Layout>

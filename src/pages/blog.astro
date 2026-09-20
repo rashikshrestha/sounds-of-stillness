@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+---
+<Layout title="Blog">
+  <h1>Blog</h1>
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <a href={`/blog/${post.slug}`}>
+          <img
+            src={post.data.coverImage ?? '/images/uploads/placeholder.svg'}
+            alt={post.data.title}
+            width="200"
+          />
+          <span>{post.data.title}</span>
+        </a>
+        — {post.data.date.toDateString()}
+      </li>
+    ))}
+  </ul>
+</Layout>

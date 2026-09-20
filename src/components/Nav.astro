@@ -1,0 +1,25 @@
+---
+const path = Astro.url.pathname;
+---
+<nav>
+  <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+  <a href="/blog" aria-current={path === '/blog' ? 'page' : undefined}>Blog</a>
+</nav>
+
+<style>
+  nav {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  nav a {
+    text-decoration: none;
+    color: #333;
+  }
+  nav a[aria-current='page'] {
+    font-weight: bold;
+    color: #000;
+  }
+</style>
