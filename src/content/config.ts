@@ -14,7 +14,15 @@ const home = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
+    coverImage: z.string().optional(),
   }),
 });
 
-export const collections = { posts, home };
+const gallery = defineCollection({
+  type: 'data',
+  schema: z.object({
+    images: z.array(z.string()),
+  }),
+});
+
+export const collections = { posts, home, gallery };

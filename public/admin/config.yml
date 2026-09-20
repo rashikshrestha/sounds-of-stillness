@@ -17,7 +17,17 @@ collections:
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "string", required: false }
+          - { label: "Cover Image", name: "coverImage", widget: "image", required: false }
           - { label: "Body", name: "body", widget: "markdown" }
+
+      - label: "Visual Poetry"
+        name: "gallery"
+        file: "src/content/gallery/index.yaml"
+        fields:
+          - label: "Images"
+            name: "images"
+            widget: "list"
+            field: { label: "Image", name: "image", widget: "image" }
 
   - name: "posts"
     label: "Posts"
