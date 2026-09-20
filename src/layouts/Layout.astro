@@ -8,6 +8,19 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <script is:inline>
+      // Netlify Identity always sends confirmation/invite/recovery links to the
+      // site root, but Decap CMS's login UI lives at /admin/. Forward straight
+      // there so people don't have to hand-edit the link from their email.
+      (function () {
+        try {
+          var h = location.hash;
+          if (/^#\/?(confirmation_token|invite_token|recovery_token|email_change_token)=/.test(h)) {
+            location.replace('/admin/' + h);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
