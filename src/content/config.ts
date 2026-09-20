@@ -32,7 +32,12 @@ const home = defineCollection({
 const gallery = defineCollection({
   type: 'data',
   schema: z.object({
-    images: z.array(z.string()),
+    images: z.array(
+      z.object({
+        image: z.string(),
+        caption: z.string().optional(),
+      })
+    ),
   }),
 });
 

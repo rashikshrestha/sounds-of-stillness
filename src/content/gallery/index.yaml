@@ -1,5 +1,9 @@
 images:
-  - /images/uploads/meditate.png
-  - /images/uploads/lotus.png
-  - /images/uploads/karma_book.png
-  - /images/uploads/little_irresistible.png
+  - image: /images/uploads/meditate.png
+    caption: Meditation
+  - image: /images/uploads/lotus.png
+    caption: I was a lotus
+  - image: /images/uploads/karma_book.png
+    caption: Karma
+  - image: /images/uploads/little_irresistible.png
+    caption: little irresistible
