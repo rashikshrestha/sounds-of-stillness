@@ -1,7 +1,7 @@
 ---
 title: My Body, My Temple
 date: 2024-04-24
-coverImage: /images/uploads/meditation_mudra.png
+cover: /images/uploads/meditation_mudra.png
 excerpt: Here in this body are the sacred rivers, here are the sun and moon, as well as all pilgrimage places.
 ---
 

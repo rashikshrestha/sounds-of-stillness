@@ -1,7 +1,7 @@
 ---
 title: Drunk on the Divine Elixir
 date: 2024-12-20
-coverImage: /images/uploads/linga_bhairavi.png
+cover: /images/uploads/linga_bhairavi.png
 excerpt: There are experiences that dissolve the boundary between you and everything else. This was one of them.
 ---
 

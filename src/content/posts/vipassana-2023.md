@@ -1,7 +1,7 @@
 ---
 title: Vipassana 2023
 date: 2023-06-14
-coverImage: /images/uploads/vipassana_trees.png
+cover: /images/uploads/vipassana_trees.png
 excerpt: Ten days of silence at Dhamma Janani Lumbini. What it gave me cannot be described — only carried.
 ---
 

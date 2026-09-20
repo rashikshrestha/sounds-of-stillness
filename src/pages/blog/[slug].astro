@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 type Props = { post: CollectionEntry<'posts'> };
 const { post } = Astro.props as Props;
 const { Content } = await post.render();
-const coverImage = post.data.coverImage ?? '/images/uploads/placeholder.svg';
+const coverImage = post.data.cover ?? '/images/uploads/placeholder.svg';
 ---
 <Layout title={post.data.title}>
   <main class="main">

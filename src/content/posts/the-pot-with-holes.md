@@ -1,7 +1,7 @@
 ---
 title: The Pot with Holes
 date: 2025-02-13
-coverImage: /images/uploads/book_page2.png
+cover: /images/uploads/book_page2.png
 excerpt: You forget most of what you read. A professor once explained why that was never the point.
 ---
 

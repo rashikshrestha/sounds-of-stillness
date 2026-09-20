@@ -1,7 +1,7 @@
 ---
 title: On the Path of Suddhi
 date: 2025-03-21
-coverImage: /images/uploads/little_irresistible.png
+cover: /images/uploads/little_irresistible.png
 excerpt: Shedding, softening, returning.
 ---
 

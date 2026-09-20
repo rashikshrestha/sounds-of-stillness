@@ -1,7 +1,7 @@
 ---
 title: The Misfit
 date: 2024-07-30
-coverImage: /images/uploads/sunset.png
+cover: /images/uploads/sunset.png
 excerpt: From the beginning, from the title of being a girl who always tended to be a misfit, I have strived to fit into a particular circle.
 ---
 

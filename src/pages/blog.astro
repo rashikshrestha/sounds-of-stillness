@@ -20,7 +20,7 @@ const sorted = posts.sort(
       {sorted.map((post: CollectionEntry<'posts'>) => (
         <a href={`/blog/${post.slug}`} class="card">
           <img
-            src={post.data.coverImage ?? '/images/uploads/placeholder.svg'}
+            src={post.data.cover ?? '/images/uploads/placeholder.svg'}
             alt={post.data.title}
             class="card-image"
           />

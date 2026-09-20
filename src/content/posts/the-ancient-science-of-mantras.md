@@ -1,7 +1,7 @@
 ---
 title: Insights from The Ancient Science of Mantras
 date: 2024-10-25
-coverImage: /images/uploads/karma_book.png
+cover: /images/uploads/karma_book.png
 excerpt: When two people are angry at each other, their hearts are no longer close — so they shout. When they love each other, they whisper.
 ---
 
